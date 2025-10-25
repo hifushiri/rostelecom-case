@@ -222,7 +222,7 @@
 
         <!-- Кнопки -->
         <div class="flex flex-col sm:flex-row gap-4">
-            <a href="/" class="btn-secondary px-4 py-2 rounded text-center">Вернуться на главную</a>
+            <a href="/newpage" class="btn-secondary px-4 py-2 rounded text-center">Вернуться на главную</a>
             <a href="/project-card?org=1234567890" class="btn-primary px-4 py-2 rounded text-center">Редактировать проект</a>
             <button class="btn-secondary px-4 py-2 rounded" onclick="window.print()">Печать</button>
         </div>

@@ -348,7 +348,7 @@
         </form>
 
         <p class="mt-4 text-center text-sm text-[var(--rtk-gray)]">
-            <a href="/dashboard" class="link-blue font-medium">Вернуться к списку проектов</a>
+            <a href="/newpage" class="link-blue font-medium">Вернуться к списку проектов</a>
         </p>
     </div>
 </body>

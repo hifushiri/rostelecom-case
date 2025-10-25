@@ -87,7 +87,7 @@
         </form>
 
         <p class="mt-4 text-center text-sm text-[var(--rtk-gray)]">
-            Вернуться к <a href="/login" class="link-blue font-medium">входу</a>
+            Вернуться к <a href="/entrance" class="link-blue font-medium">входу</a>
         </p>
     </div>
 </body>

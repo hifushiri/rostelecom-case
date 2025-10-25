@@ -5,24 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Конструктор отчетов - Ростелеком Управление проектами</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <style>
         :root {
-            --rtk-red: #E30613; /* Основной красный Ростелеком */
-            --rtk-dark-red: #B0050F; /* Темнее для ховера */
-            --rtk-gray: #4A4A4A; /* Серый текст/фон */
-            --rtk-light-gray: #F5F5F5; /* Светлый фон */
-            --rtk-blue: #0054B9; /* Синий акцент */
-            --rtk-white: #FFFFFF;/*риольд*/
+            --rtk-red: #E30613;
+            --rtk-dark-red: #B0050F;
+            --rtk-gray: #4A4A4A;
+            --rtk-light-gray: #F5F5F5;
+            --rtk-blue: #0054B9;
+            --rtk-white: #FFFFFF;
         }
         body {
             background-color: var(--rtk-light-gray);
             font-family: 'Arial', sans-serif;
         }
         .report-builder-container {
-            max-width: 1000px; /* Шире для формы и таблицы */
+            max-width: 1000px;
             width: 100%;
-            margin: 2rem auto; /* Отступы сверху и снизу */
-            padding: 2rem; /* Компактные внутренние отступы */
+            margin: 2rem auto;
+            padding: 2rem;
             background-color: var(--rtk-white);
             border-radius: 8px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -41,7 +42,7 @@
             transition: background-color 0.3s;
         }
         .btn-secondary:hover {
-            background-color: #003f8a; /* Темнее синего */
+            background-color: #003f8a;
         }
         .link-blue {
             color: var(--rtk-blue);
@@ -59,24 +60,104 @@
             max-height: 400px;
             overflow-y: auto;
         }
+        /* Added styles from other pages */
+        .header-container {
+            background: linear-gradient(to right, var(--rtk-white), #f8fafc);
+            padding: 1.5rem 2rem;
+            border-bottom: 2px solid var(--rtk-red);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+        .btn-nav {
+            background-color: var(--rtk-light-gray);
+            color: var(--rtk-gray);
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .btn-nav:hover {
+            background-color: var(--rtk-blue);
+            color: var(--rtk-white);
+        }
+        .user-panel {
+            display: inline-flex;
+            align-items: center;
+            background-color: var(--rtk-light-gray);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+        .btn-back {
+            background-color: var(--rtk-blue);
+            color: var(--rtk-white);
+            border-radius: 8px;
+            transition: background-color 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 36px;
+            width: 36px;
+        }
+        .btn-back:hover {
+            background-color: #003f8a;
+        }
         @media (max-width: 640px) {
             .report-builder-container {
-                max-width: 100%; /* На мобильных вся ширина */
+                max-width: 100%;
                 margin: 1rem;
                 padding: 1.5rem;
             }
             .report-table {
-                max-height: none; /* Скролл допустим на мобильных */
+                max-height: none;
+            }
+            .header-container {
+                padding: 1rem;
+            }
+            .nav-container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .user-panel {
+                flex-direction: column;
+                align-items: flex-start;
+                width: auto;
+            }
+            .btn-back {
+                height: 32px;
+                width: 32px;
             }
         }
     </style>
 </head>
 <body class="min-h-screen bg-gray-100">
+    <!-- Шапка -->
+    <header class="header-container">
+        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center">
+            <!-- Логотип -->
+            <div>
+                <h1 class="text-3xl font-bold text-[var(--rtk-red)]">Ростелеком</h1>
+                <p class="text-sm text-[var(--rtk-gray)] mt-1">Управление проектами коммерческого подразделения</p>
+            </div>
+            <!-- Навигация -->
+            <nav class="nav-container flex flex-wrap gap-2 mt-4 sm:mt-0">
+                <a href="/analytics-dashboard" class="btn-nav px-4 py-2 rounded text-sm"><i class="fas fa-chart-line mr-1"></i>Дашборд аналитики</a>
+                <a href="/report-builder" class="btn-nav px-4 py-2 rounded text-sm"><i class="fas fa-file-alt mr-1"></i>Конструктор отчетов</a>
+                <a href="/dictionaries" class="btn-nav px-4 py-2 rounded text-sm"><i class="fas fa-book mr-1"></i>Управление справочниками</a>
+                <a href="/user-management" class="btn-nav px-4 py-2 rounded text-sm"><i class="fas fa-users mr-1"></i>Управление пользователями</a>
+            </nav>
+        </div>
+    </header>
+
     <div class="report-builder-container">
-        <!-- Логотип/Заголовок Ростелеком -->
-        <div class="text-center mb-6">
-            <h1 class="text-3xl font-bold text-[var(--rtk-red)]">Ростелеком</h1>
-            <p class="text-sm text-[var(--rtk-gray)] mt-1">Управление проектами коммерческого подразделения</p>
+        <!-- Панель пользователя и кнопка Назад -->
+        <div class="flex justify-between items-center mb-4">
+            <!-- Кнопка Назад -->
+            <a href="/newpage" class="btn-back"><i class="fas fa-arrow-left text-[var(--rtk-white)]"></i></a>
+            <!-- Панель пользователя -->
+            <div class="user-panel">
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-user text-[var(--rtk-gray)]"></i>
+                    <span class="text-sm text-[var(--rtk-gray)]">Иванов И.И.</span>
+                    <a href="/entrance" class="text-sm link-blue"><i class="fas fa-sign-out-alt mr-1"></i>Выйти</a>
+                </div>
+            </div>
         </div>
 
         <h2 class="text-2xl font-semibold text-center mb-6 text-[var(--rtk-gray)]">Конструктор отчетов</h2>
@@ -206,16 +287,13 @@
                             <td class="py-2 px-4 border-b text-sm">800,000</td>
                             <td class="py-2 px-4 border-b text-sm">800,000</td>
                         </tr>
-                        <!-- Демо-строки, в реальности динамические -->
                     </tbody>
                 </table>
             </div>
             <p class="mt-2 text-sm text-[var(--rtk-gray)] italic">Найдено 2 проекта. Общая выручка: 2,300,000 ₽ (с вероятностью: 2,000,000 ₽)</p>
         </div>
 
-        <p class="mt-6 text-center text-sm text-[var(--rtk-gray)]">
-            <a href="/dashboard" class="link-blue font-medium">Вернуться к дашборду</a>
-        </p>
+        
     </div>
 </body>
 </html>

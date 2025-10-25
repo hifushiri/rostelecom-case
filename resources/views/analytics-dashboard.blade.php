@@ -8,6 +8,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/frappe-gantt@0.6.1/dist/frappe-gantt.css">
     <script src="https://cdn.jsdelivr.net/npm/frappe-gantt@0.6.1/dist/frappe-gantt.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <style>
         :root {
             --rtk-red: #E30613;
@@ -53,7 +54,6 @@
             font-weight: 600;
             color: var(--rtk-gray);
             margin-bottom: 1rem;
-            
         }
         .chart-container {
             height: 300px;
@@ -78,6 +78,45 @@
         .status-stage-up { background-color: var(--rtk-blue); }
         .status-revenue-up { background-color: #10B981; }
         .status-revenue-down { background-color: #F87171; }
+        /* Added styles from user management page */
+        .user-panel {
+            display: inline-flex;
+            align-items: center;
+            background-color: var(--rtk-light-gray);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+        .btn-back {
+            background-color: var(--rtk-blue);
+            color: var(--rtk-white);
+            border-radius: 8px;
+            transition: background-color 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 36px;
+            width: 36px;
+        }
+        .btn-back:hover {
+            background-color: #003f8a;
+        }
+        /* Added styles for header and navigation */
+        .header-container {
+            background: linear-gradient(to right, var(--rtk-white), #f8fafc);
+            padding: 1.5rem 2rem;
+            border-bottom: 2px solid var(--rtk-red);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+        .btn-nav {
+            background-color: var(--rtk-light-gray);
+            color: var(--rtk-gray);
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .btn-nav:hover {
+            background-color: var(--rtk-blue);
+            color: var(--rtk-white);
+        }
         @media (max-width: 640px) {
             .dashboard-container {
                 max-width: 100%;
@@ -93,15 +132,62 @@
             .projects-table {
                 max-height: none;
             }
+            .user-panel {
+                flex-direction: column;
+                align-items: flex-start;
+                width: auto;
+            }
+            .btn-back {
+                height: 32px;
+                width: 32px;
+            }
+            .header-container {
+                padding: 1rem;
+            }
+            .nav-container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
         }
+        .gantt-red .bar { fill: var(--rtk-red); }
+        .gantt-blue .bar { fill: var(--rtk-blue); }
+        .gantt-light-blue .bar { fill: var(--rtk-light-blue); }
+        .gantt-gold .bar { fill: var(--rtk-gold); }
+        .gantt-gray-blue .bar { fill: var(--rtk-gray-blue); }
     </style>
 </head>
 <body class="min-h-screen bg-gray-100">
+    <!-- Шапка -->
+    <header class="header-container">
+        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center">
+            <!-- Логотип -->
+            <div>
+                <h1 class="text-3xl font-bold text-[var(--rtk-red)]">Ростелеком</h1>
+                <p class="text-sm text-[var(--rtk-gray)] mt-1">Управление проектами коммерческого подразделения</p>
+            </div>
+            <!-- Навигация -->
+            <nav class="nav-container flex flex-wrap gap-2 mt-4 sm:mt-0">
+                <a href="/analytics-dashboard" class="btn-nav px-4 py-2 rounded text-sm"><i class="fas fa-chart-line mr-1"></i>Дашборд аналитики</a>
+                <a href="/report-builder" class="btn-nav px-4 py-2 rounded text-sm"><i class="fas fa-file-alt mr-1"></i>Конструктор отчетов</a>
+                <a href="/dictionaries" class="btn-nav px-4 py-2 rounded text-sm"><i class="fas fa-book mr-1"></i>Управление справочниками</a>
+                <a href="/user-management" class="btn-nav px-4 py-2 rounded text-sm"><i class="fas fa-users mr-1"></i>Управление пользователями</a>
+            </nav>
+        </div>
+    </header>
+
     <div class="dashboard-container">
-        <!-- Логотип/Заголовок Ростелеком -->
-        <div class="text-center mb-6">
-            <h1 class="text-3xl font-bold text-[var(--rtk-red)]">Ростелеком</h1>
-            <p class="text-sm text-[var(--rtk-gray)] mt-1">Управление проектами коммерческого подразделения</p>
+        <!-- Панель пользователя и кнопка Назад -->
+        <div class="flex justify-between items-center mb-4">
+            <!-- Кнопка Назад -->
+            <a href="/newpage" class="btn-back"><i class="fas fa-arrow-left text-[var(--rtk-white)]"></i></a>
+            <!-- Панель пользователя -->
+            <div class="user-panel">
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-user text-[var(--rtk-gray)]"></i>
+                    <span class="text-sm text-[var(--rtk-gray)]">Иванов И.И.</span>
+                    <a href="/entrance" class="text-sm link-blue"><i class="fas fa-sign-out-alt mr-1"></i>Выйти</a>
+                </div>
+            </div>
         </div>
 
         <h2 class="text-2xl font-semibold text-center mb-6 text-[var(--rtk-gray)]">Аналитический дашборд</h2>
@@ -244,9 +330,7 @@
             </div>
         </div>
 
-        <p class="mt-6 text-center text-sm text-[var(--rtk-gray)]">
-            <a href="/dashboard" class="link-blue font-medium">Вернуться к основному дашборду</a>
-        </p>
+        
     </div>
 
     <!-- Скрипты для графиков -->
@@ -507,13 +591,5 @@
             });
         }
     </script>
-
-    <style>
-        .gantt-red .bar { fill: var(--rtk-red); }
-        .gantt-blue .bar { fill: var(--rtk-blue); }
-        .gantt-light-blue .bar { fill: var(--rtk-light-blue); }
-        .gantt-gold .bar { fill: var(--rtk-gold); }
-        .gantt-gray-blue .bar { fill: var(--rtk-gray-blue); }
-    </style>
 </body>
 </html>
