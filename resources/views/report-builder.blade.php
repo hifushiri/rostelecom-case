@@ -12,7 +12,7 @@
             --rtk-gray: #4A4A4A; /* Серый текст/фон */
             --rtk-light-gray: #F5F5F5; /* Светлый фон */
             --rtk-blue: #0054B9; /* Синий акцент */
-            --rtk-white: #FFFFFF;
+            --rtk-white: #FFFFFF;/*риольд*/
         }
         body {
             background-color: var(--rtk-light-gray);
