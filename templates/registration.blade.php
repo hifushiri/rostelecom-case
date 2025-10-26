@@ -7,11 +7,11 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         :root {
-            --rtk-red: #E30613; /* Основной красный Ростелеком */
-            --rtk-dark-red: #B0050F; /* Темнее для ховера */
-            --rtk-gray: #4A4A4A; /* Серый текст/фон */
-            --rtk-light-gray: #F5F5F5; /* Светлый фон */
-            --rtk-blue: #0054B9; /* Синий акцент */
+            --rtk-red: #E30613;
+            --rtk-dark-red: #B0050F;
+            --rtk-gray: #4A4A4A;
+            --rtk-light-gray: #F5F5F5;
+            --rtk-blue: #0054B9;
             --rtk-white: #FFFFFF;
         }
         body {
@@ -19,10 +19,10 @@
             font-family: 'Arial', sans-serif;
         }
         .register-container {
-            max-width: 600px; /* Ширина для десктопа */
+            max-width: 600px;
             width: 100%;
-            margin: 2rem auto; /* Отступы сверху и снизу */
-            padding: 2rem; /* Компактные внутренние отступы */
+            margin: 2rem auto;
+            padding: 2rem;
             background-color: var(--rtk-white);
             border-radius: 8px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -43,8 +43,8 @@
         }
         @media (max-width: 640px) {
             .register-container {
-                max-width: 100%; /* На мобильных вся ширина */
-                margin: 1rem; /* Меньшие отступы */
+                max-width: 100%;
+                margin: 1rem;
                 padding: 1.5rem;
             }
         }
@@ -52,47 +52,40 @@
 </head>
 <body class="min-h-screen flex items-center justify-center bg-gray-100">
     <div class="register-container">
-        <!-- Логотип/Заголовок Ростелеком -->
         <div class="text-center mb-6">
             <h1 class="text-3xl font-bold text-[var(--rtk-red)]">Ростелеком</h1>
             <p class="text-sm text-[var(--rtk-gray)] mt-1">Управление проектами коммерческого подразделения</p>
         </div>
-
         <h2 class="text-2xl font-semibold text-center mb-6 text-[var(--rtk-gray)]">Регистрация</h2>
-
-        <!-- Сообщение об ошибке (демо, скрыто) -->
-        <div class="hidden bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded mb-4">
-            <ul class="list-disc list-inside">
-                <li>Пожалуйста, заполните все поля корректно</li>
-            </ul>
+        
+        <div id="errorMessage" class="hidden bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded mb-4">
+            <ul class="list-disc list-inside"></ul>
+        </div>
+        <div id="successMessage" class="hidden bg-green-100 border border-green-400 text-green-700 px-4 py-2 rounded mb-4">
+            <p>Регистрация успешна! Перенаправляем...</p>
         </div>
 
-        <!-- Форма регистрации -->
-        <form>
+        <form id="registerForm">
             <div class="mb-4">
                 <label for="name" class="block text-sm font-medium text-[var(--rtk-gray)]">ФИО</label>
                 <input type="text" id="name" name="name" placeholder="Иванов Иван Иванович" required
                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[var(--rtk-red)] focus:border-[var(--rtk-red)] text-sm">
             </div>
-
             <div class="mb-4">
                 <label for="email" class="block text-sm font-medium text-[var(--rtk-gray)]">Email</label>
                 <input type="email" id="email" name="email" placeholder="example@rostelecom.ru" required
                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[var(--rtk-red)] focus:border-[var(--rtk-red)] text-sm">
             </div>
-
             <div class="mb-4">
                 <label for="password" class="block text-sm font-medium text-[var(--rtk-gray)]">Пароль</label>
-                <input type="password" id="password" name="password" required
+                <input type="password" id="password" name="password" required minlength="8" maxlength="72"
                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[var(--rtk-red)] focus:border-[var(--rtk-red)] text-sm">
             </div>
-
             <div class="mb-4">
                 <label for="password_confirmation" class="block text-sm font-medium text-[var(--rtk-gray)]">Подтверждение пароля</label>
-                <input type="password" id="password_confirmation" name="password_confirmation" required
+                <input type="password" id="password_confirmation" name="password_confirmation" required minlength="8" maxlength="72"
                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[var(--rtk-red)] focus:border-[var(--rtk-red)] text-sm">
             </div>
-
             <button type="submit" class="w-full btn-primary py-2 px-4 rounded-md font-medium text-base">
                 Зарегистрироваться
             </button>
@@ -102,5 +95,58 @@
             Уже есть аккаунт? <a href="/entrance" class="link-blue font-medium">Войти</a>
         </p>
     </div>
+
+    <script>
+        document.getElementById('registerForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            let password = document.getElementById('password').value;
+            const password_confirmation = document.getElementById('password_confirmation').value;
+            const errorDiv = document.getElementById('errorMessage');
+            const successDiv = document.getElementById('successMessage');
+
+            // Сброс сообщений
+            errorDiv.classList.add('hidden');
+            successDiv.classList.add('hidden');
+
+            // Проверка длины пароля и совпадения
+            if (password.length < 8) {
+                errorDiv.classList.remove('hidden');
+                errorDiv.querySelector('ul').innerHTML = `<li>Пароль должен содержать минимум 8 символов</li>`;
+                return;
+            }
+            if (password !== password_confirmation) {
+                errorDiv.classList.remove('hidden');
+                errorDiv.querySelector('ul').innerHTML = `<li>Пароли не совпадают</li>`;
+                return;
+            }
+
+            // Ограничение длины пароля до 72 байт
+            const encoder = new TextEncoder();
+            const byteLength = encoder.encode(password).length;
+            console.log(`Отправляемый пароль: длина ${password.length} символов, ${byteLength} байт`);
+            password = new TextDecoder('utf-8').decode(encoder.encode(password).slice(0, 72));
+
+            try {
+                const response = await fetch('/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, email, password })
+                });
+                const result = await response.json();
+                if (response.ok) {
+                    successDiv.classList.remove('hidden');
+                    setTimeout(() => { window.location.href = '/newpage'; }, 2000);
+                } else {
+                    errorDiv.classList.remove('hidden');
+                    errorDiv.querySelector('ul').innerHTML = `<li>${result.detail || 'Ошибка регистрации'}</li>`;
+                }
+            } catch (error) {
+                errorDiv.classList.remove('hidden');
+                errorDiv.querySelector('ul').innerHTML = `<li>Ошибка сети: ${error.message}</li>`;
+            }
+        });
+    </script>
 </body>
 </html>
